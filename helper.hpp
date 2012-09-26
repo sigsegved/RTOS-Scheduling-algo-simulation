@@ -2,8 +2,12 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include <iostream>
+#include <vector>
 
 #define HELPER_H
+
+using namespace std;
 
 
 typedef struct task_node {
@@ -12,13 +16,9 @@ typedef struct task_node {
         int wcet;
 }task;
 
-typedef struct taskset { 
-        task *task_arr;
-        int N;
-}task_set;
-
-task_set read_input();
-void print_task_arr(task *,int);
+void read_input(vector<task> &);
+void print_task_vec(vector<task> &);
+bool comparebyperiod(const task&,const task&);
 
 #endif
 
