@@ -1,4 +1,4 @@
-#ifndef __RMSH_H
+#ifndef __RMS_H
 #define __RMS_H
 
 #include "helper.hpp"

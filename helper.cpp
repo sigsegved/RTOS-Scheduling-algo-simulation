@@ -1,5 +1,11 @@
 #include "helper.hpp"
 
+bool comparebyslacktime(const task &a, const task &b) {
+	if(a.slacktime < b.slacktime) {
+		return true;
+	}
+	return false;
+}
 
 bool comparebyperiod(const task &a, const task &b) {
 	if(a.period < b.period) {
@@ -51,6 +57,7 @@ void read_input(vector<task> &task_vector) {
 		t.arrival_time = 0;
 		t.deadline = t.arrival_time  + t.period;
 		t.ceu = 0;
+		t.slacktime = (t.deadline - 0) - ( t.wcet - t.ceu);
 		task_vector.push_back(t);
 		index--;
 	}
@@ -64,10 +71,10 @@ void print_task_vec(vector<task> &v) {
 
 	cout<<"----------------------------------\n";
 
-	cout<<"Task\tPeriod\tWCET\tatime\tdeadline\n";
+	cout<<"Task\tPeriod\tWCET\tatime\tdead\tslack\n";
 
 	for (i=0;i<n;i++) { 
-		cout<<v[i].task_id<<"\t"<<v[i].period<<"\t"<<v[i].wcet<<"\t"<<v[i].arrival_time<<"\t"<<v[i].deadline<<endl;
+		cout<<v[i].task_id<<"\t"<<v[i].period<<"\t"<<v[i].wcet<<"\t"<<v[i].arrival_time<<"\t"<<v[i].deadline<<"\t"<<v[i].slacktime<<endl;
 	}
 	cout<<"----------------------------------\n";
 }

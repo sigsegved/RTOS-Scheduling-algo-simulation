@@ -18,12 +18,14 @@ typedef struct task_node {
 	int deadline;
 	int state;
 	int ceu;
+	int slacktime;
 }task;
 
 void read_input(vector<task> &);
 void print_task_vec(vector<task> &);
 bool comparebyperiod(const task&,const task&);
 bool comparebydeadline(const task&,const task&);
+bool comparebyslacktime(const task&,const task&);
 
 #endif
 

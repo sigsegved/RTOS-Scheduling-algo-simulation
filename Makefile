@@ -18,6 +18,7 @@ LIBS=
 HELPER_OBJS=$(OBJDIR)/helper.o \
 		$(OBJDIR)/main.o\
 		$(OBJDIR)/RMS.o \
+		$(OBJDIR)/LST.o \
 		$(OBJDIR)/EDF.o
 
 all : edf_sim
@@ -37,6 +38,8 @@ $(OBJDIR)/EDF.o : $(SRCDIR)/EDF.cpp
 $(OBJDIR)/RMS.o : $(SRCDIR)/RMS.cpp
 	$(CXX) $(CFLAGS) $(INC)  $^ 
 
+$(OBJDIR)/LST.o : $(SRCDIR)/LST.cpp
+	$(CXX) $(CFLAGS) $(INC)  $^ 
 clean : 
 	rm $(OBJDIR)/*.o
 	rm edf_sim
