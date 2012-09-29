@@ -16,19 +16,26 @@ LIBS=
 
 
 HELPER_OBJS=$(OBJDIR)/helper.o \
+		$(OBJDIR)/main.o\
+		$(OBJDIR)/RMS.o \
 		$(OBJDIR)/EDF.o
 
 all : edf_sim
 
 edf_sim : $(HELPER_OBJS) 
-	$(CXX) -o $(BINDIR)/$@ $(HELPER_OBJS) $(INC) $(LIBS)
+	$(CXX) -g -o $(BINDIR)/$@ $(HELPER_OBJS) $(INC) $(LIBS)
 
+$(OBJDIR)/main.o : $(SRCDIR)/main.cpp
+	$(CXX) $(CFLAGS) $(INC)  $^
 
 $(OBJDIR)/helper.o : $(SRCDIR)/helper.cpp
-	$(CXX) $(CFLAGS) $(INC)  $(SRCDIR)/helper.cpp -o $@
+	$(CXX) $(CFLAGS) $(INC)  $^
 
 $(OBJDIR)/EDF.o : $(SRCDIR)/EDF.cpp
-	$(CXX) $(CFLAGS) $(INC)  $(SRCDIR)/EDF.cpp -o $@
+	$(CXX) $(CFLAGS) $(INC)  $^
+
+$(OBJDIR)/RMS.o : $(SRCDIR)/RMS.cpp
+	$(CXX) $(CFLAGS) $(INC)  $^ 
 
 clean : 
 	rm $(OBJDIR)/*.o

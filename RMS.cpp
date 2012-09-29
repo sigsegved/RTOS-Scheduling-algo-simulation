@@ -1,8 +1,8 @@
-#include "EDF.h"
+#include "RMS.h"
 
 #define READY 1
 
-void EDF_Scheduler(vector<task> &task_vec,int sim_time) { 
+void RMS_Scheduler(vector<task> &task_vec,int sim_time) { 
 	/*t=0
 	one time sorty by period (assign priority
 	for each process set arrival.time = 0
@@ -15,7 +15,7 @@ void EDF_Scheduler(vector<task> &task_vec,int sim_time) {
 	if curr_task is done curr_priority--;
 	loop
 	*/
-	sort(task_vec.begin(),task_vec.end(),comparebydeadline);
+	sort(task_vec.begin(),task_vec.end(),comparebyperiod);
 	print_task_vec(task_vec);
 	int i,time = 0;
 	int  n = task_vec.size();
@@ -28,16 +28,19 @@ void EDF_Scheduler(vector<task> &task_vec,int sim_time) {
 	}
 	while (time < sim_time) {
 		cout<<"TIME "<<time<<endl;
-		curr_process = 0;
-		if(curr_process > -1) {
-
-			if(task_vec[curr_process].ceu < task_vec[curr_process].wcet) {
-				task_vec[curr_process].ceu++;
-				cout<<"\tEXECUTING TASK "<<task_vec[curr_process].task_id<<endl;
-
+		curr_process = -1;
+		for(i=0;i<n;i++) {
+			if(task_vec[i].state==READY && task_vec[i].arrival_time <= time) {
+				cout<<"\tEXECUTING TASK "<<i+1<<endl;
+				curr_process = i;
+				break;
 			}
+		}
+
+		if(curr_process > -1) {
+			task_vec[curr_process].ceu++;
 			if (task_vec[curr_process].ceu == task_vec[curr_process].wcet) {
-				cout<<"\tTASK COMPLETED "<<task_vec[curr_process].task_id<<endl;
+				cout<<"\tTASK COMPLETED "<<curr_process+1<<endl;
 				task_vec[curr_process].arrival_time += task_vec[curr_process].period;
 				task_vec[curr_process].deadline = task_vec[curr_process].arrival_time + task_vec[curr_process].period;
 				task_vec[curr_process].state = READY;
@@ -58,9 +61,8 @@ void EDF_Scheduler(vector<task> &task_vec,int sim_time) {
 			}
 		}
 		time++;
-		sort(task_vec.begin(),task_vec.end(),comparebydeadline);
 		//print_task_vec(task_vec);
 	}
-	print_task_vec(task_vec);
+		print_task_vec(task_vec);
 
 }
